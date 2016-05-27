@@ -4,7 +4,7 @@
 // 2016-05-26
 
 /*****************************************************
- * class ALHeap
+ * class ALMinHeap
  * Implements a min heap using an ArrayList as underlying container
  *****************************************************/
 
@@ -18,8 +18,8 @@ public class ALMinHeap {
     /*****************************************************
      * default constructor  ---  inits empty heap
      *****************************************************/
-    public ALMinHeap()
-    {
+    public ALMinHeap() 
+    { 
         _heap = new ArrayList<Integer>();
     }
 
@@ -27,11 +27,11 @@ public class ALMinHeap {
 
     /*****************************************************
      * toString()  ---  overrides inherited method
-     * Returns either
+     * Returns either 
      * a) a level-order traversal of the tree (simple version)
      * b) ASCII representation of the tree (bit more complicated, much more fun)
      *****************************************************/
-    public String toString()
+    public String toString() 
     {
         return _heap.toString();
     }//O(n)
@@ -42,9 +42,20 @@ public class ALMinHeap {
      * boolean isEmpty()
      * Returns true if no meaningful elements in heap, false otherwise
      *****************************************************/
-    public boolean isEmpty()
+    public boolean isEmpty() 
     {
-        return _heap.isEmpty();
+        return _heap.isEmpty(); 
+    } //O(1)
+
+
+
+    /*****************************************************
+     * int size()
+     * Returns size of heap
+     *****************************************************/
+    public int size()
+    {
+        return _heap.size();
     } //O(1)
 
 
@@ -54,7 +65,7 @@ public class ALMinHeap {
      * Returns min value in heap
      * Postcondition: Heap remains unchanged.
      *****************************************************/
-    public Integer peekMin()
+    public Integer peekMin() 
     {
         if (_heap.size() < 1) {
             return null;
@@ -65,11 +76,11 @@ public class ALMinHeap {
 
 
     /*****************************************************
-     * add(Integer)
+     * add(Integer) 
      * Inserts an element in the heap
      * Postcondition: Tree maintains heap property.
      *****************************************************/
-    public void add( Integer addVal )
+    public void add( Integer addVal ) 
     {
         _heap.add(addVal);
         int valPos = _heap.size()-1;
@@ -86,14 +97,14 @@ public class ALMinHeap {
      * Removes and returns least element in heap.
      * Postcondition: Tree maintains heap property.
      *****************************************************/
-    public Integer removeMin()
+    public Integer removeMin() 
     {
         if (isEmpty()) {
             return null;
         }
-
+        
         int retNum = peekMin();
-
+        
         _heap.set(0, _heap.get(_heap.size()-1));
         _heap.remove(_heap.size()-1);
         int valPos = 0;
@@ -109,11 +120,11 @@ public class ALMinHeap {
 
     /*****************************************************
      * minChildPos(int)  ---  helper fxn for removeMin()
-     * Returns index of least child, or
+     * Returns index of least child, or 
      * -1 if no children, or if input pos is not in ArrayList
      * Postcondition: Tree unchanged
      *****************************************************/
-    private int minChildPos( int pos )
+    private int minChildPos( int pos ) 
     {
         if (pos < 0 || pos >= _heap.size() || (pos*2)+1 >= _heap.size()) {
             return -1;
@@ -130,7 +141,7 @@ public class ALMinHeap {
 
 
     //************ aux helper fxns ***************
-    private Integer minOf( Integer a, Integer b )
+    private Integer minOf( Integer a, Integer b ) 
     {
         if ( a.compareTo(b) < 0 )
             return a;
@@ -139,9 +150,9 @@ public class ALMinHeap {
     }
 
     //swap for an ArrayList
-    private void swap( int pos1, int pos2 )
+    private void swap( int pos1, int pos2 ) 
     {
-	   _heap.set( pos1, _heap.set( pos2, _heap.get(pos1) ) );
+	   _heap.set( pos1, _heap.set( pos2, _heap.get(pos1) ) );	
     }
     //********************************************
 
@@ -150,7 +161,7 @@ public class ALMinHeap {
     //main method for testing
     public static void main( String[] args ) {
 
-
+	
 
 	  ALMinHeap pile = new ALMinHeap();
 
@@ -174,8 +185,8 @@ public class ALMinHeap {
 	  System.out.println(pile);
 	  pile.add(9);
 	  System.out.println(pile);
-
-
+    
+    
 	  System.out.println("removing " + pile.removeMin() + "...");
 	  System.out.println(pile);
 	  System.out.println("removing " + pile.removeMin() + "...");

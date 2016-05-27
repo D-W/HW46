@@ -1,3 +1,8 @@
+// Team Balloons - Leith Conybeare, Anton Goretsky, Dylan Wright
+// APCS2 pd5
+// HW46 -- Running M[edi]an
+// 2016-05-26
+
 /*****************************************************
  * class RunMed
  * Implements an online algorithm to track the median of a growing dataset
@@ -19,8 +24,9 @@ public class RunMed {
      * default constructor  ---  inits empty heap
      *****************************************************/
     public RunMed() 
-    { 
-
+    {
+        leftHeap = new ALMaxHeap();
+        rightHeap = new ALMinHeap();
     }//O(1)
 
 
@@ -30,7 +36,19 @@ public class RunMed {
      *****************************************************/
     public double getMedian() 
     {
-
+        if (isEmpty()) {
+            return -1;
+        }
+        if (rightHeap.isEmpty()) {
+            return leftHeap.peekMax();
+        }
+        if (leftHeap.size() > rightHeap.size()) {
+            return leftHeap.peekMax();
+        }
+        if (rightHeap.size() > leftHeap.size()) {
+            return rightHeap.peekMin();
+        }
+        return ((leftHeap.peekMax() * 1.0) + rightHeap.peekMin()) / 2;
     }//O(1)
 
 
@@ -41,8 +59,41 @@ public class RunMed {
      *                getMedian() can run in constant time
      *****************************************************/
     public void insert( int addVal )
-    {   
-     }//O(?)
+    {
+        if (isEmpty()) {
+            leftHeap.add(addVal);
+        }
+        else {
+            if (leftHeap.size() > rightHeap.size()) {
+                if (leftHeap.peekMax() > addVal) {
+                    int temp = leftHeap.removeMax();
+                    rightHeap.add(temp);
+                    leftHeap.add(addVal);
+                }
+                else {
+                    rightHeap.add(addVal);
+                }
+            }
+            else if (rightHeap.size() > leftHeap.size()) {
+                if (rightHeap.peekMin() < addVal) {
+                    int temp = rightHeap.removeMin();
+                    leftHeap.add(temp);
+                    rightHeap.add(addVal);
+                }
+                else {
+                    leftHeap.add(addVal);
+                }
+            }
+            else {
+                if (rightHeap.peekMin() < addVal) {
+                    rightHeap.add(addVal);
+                }
+                else {
+                    leftHeap.add(addVal);
+                }
+            }
+        }
+    }//O(logn)
 
 
 
@@ -52,28 +103,34 @@ public class RunMed {
      *****************************************************/
     public boolean isEmpty() 
     {
-
-    }//O(?)
+        return leftHeap.isEmpty() && rightHeap.isEmpty();
+    }//O(1)
 
 
 
     //main method for testing
     public static void main( String[] args ) {
 
-	/*~~~V~~~~~~~~~~~~move~me~down~~~~~~~~~~~~~V~~~
         RunMed med = new RunMed();
 
+        
         med.insert(1);
-	System.out.println( med.getMedian() ); //1
+        System.out.println( med.getMedian() ); //1
+        
         med.insert(3);
-	System.out.println( med.getMedian() ); //2
+        System.out.println( med.getMedian() ); //2
+        
         med.insert(5);
-	System.out.println( med.getMedian() ); //3
+        System.out.println( med.getMedian() ); //3
+        
         med.insert(7);
-	System.out.println( med.getMedian() ); //4
+        System.out.println( med.getMedian() ); //4
+        
         med.insert(9);
-	System.out.println( med.getMedian() ); //5
-	~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~*/
+        System.out.println( med.getMedian() ); //5
+        
+        /*~~~V~~~~~~~~~~~~move~me~down~~~~~~~~~~~~~V~~~
+        ~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~*/
 
     }//end main()
 
